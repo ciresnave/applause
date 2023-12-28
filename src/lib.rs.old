@@ -1,0 +1,43 @@
+use quote::quote;
+
+/// ## Config derive macro:
+///
+/// Parses configuration values from different sources and puts them into a variable.
+///
+/// ### Usage Examples:
+///
+/// #### Parsing configuration values into a struct:
+///
+///  ``` Rust
+///  #[derive(Config(TOML(config.toml), PostgreSQL(postgres://user:pass@localhost:5432/database), environment_variable_prefix = {env!("CARGO_BIN_NAME")}, CLI()))]
+///  struct Config {
+///      /// The port to run the server on
+///      #[default(8080), validate(range(min = 1, max = 65535))]
+///      port: u16,
+///      /// The host to run the server on
+///      #[default("localhost")]
+///      host: String,
+///  }
+///  ```
+#[proc_macro_derive(Config, attributes(default, validate))]
+pub fn config_derive(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_config_derive(&ast)
+}
+
+fn impl_config_derive(ast: &syn::DeriveInput) -> proc_macro::TokenStream {
+    let name = &ast.ident;
+    let gen = quote!(
+        impl Config for #name {
+            fn parse() -> Result<Self, ConfigError> {
+                let mut config = Config::default();
+                config.parse_toml()?;
+                config.parse_postgres()?;
+                config.parse_environment_variables()?;
+                config.parse_cli()?;
+                Ok(config)
+            }
+        }
+    );
+    gen.into()
+}
