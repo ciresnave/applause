@@ -4,19 +4,18 @@ version = 3
 
 [[package]]
 name = "applause"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "applause_derive",
  "inventory",
  "log",
- "serde",
 ]
 
 [[package]]
 name = "applause_derive"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f8c9686dca28be8a0badc9976f99f2499adba5770677abb2044b955e6ae799b"
+checksum = "a661fd1e38e889d2a8028c5692d783f6df403078c36460aea71c2b7c6d54e98c"
 dependencies = [
  "log",
  "quote",
@@ -51,26 +50,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5267fca4496028628a95160fc423a33e8b2e6af8a5302579e322e4b520293cae"
 dependencies = [
  "proc-macro2",
-]
-
-[[package]]
-name = "serde"
-version = "1.0.193"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "25dd9975e68d0cb5aa1120c288333fc98731bd1dd12f561e468ea4728c042b89"
-dependencies = [
- "serde_derive",
-]
-
-[[package]]
-name = "serde_derive"
-version = "1.0.193"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "43576ca501357b9b071ac53cdc7da8ef0cbd9493d8df094cd821777ea6e894d3"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
 ]
 
 [[package]]
